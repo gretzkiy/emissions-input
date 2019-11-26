@@ -13,26 +13,29 @@ namespace EmissionsInput
 {
     public partial class MainForm : Form
     {
+        public Source[] sources;
+        public Sensor[] sensors;
+
         public MainForm()
         {
             InitializeComponent();
+            sources = InitialSources();
+            sensors = InitialSensors();
         }
 
         private Source[] InitialSources()
         {
             Source src1 = new Source()
             {
-                pniv = 1,
-                sourceUuid = "source1"
+                pniv = 1
             };
 
             Source src2 = new Source()
             {
-                pniv = 2,
-                sourceUuid = "source2"
+                pniv = 2
             };
 
-            return new Source[] { src1, src2};
+            return new Source[] { src1, src2 };
         }
 
         private Sensor[] InitialSensors()
@@ -52,18 +55,39 @@ namespace EmissionsInput
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Value val = new Value()
+            try
             {
-                value = "21"
-            };
+                Value val = new Value()
+                {
+                    value = valueTextBox.Text
+                };
 
-            valueTextBox.Text = val.value;
+                Parameter param = new Parameter()
+                {
+                    code = parameterTextBox.Text,
+                    unit = "kg",
+                    type = "string"
+                };
+
+                param.values.Append(val);
+
+                sensors[sensorsDropDown.SelectedIndex].parameters.Append(param);
+                sources[sourcesDropDown.SelectedIndex].sensors.Append(sensors[sensorsDropDown.SelectedIndex]);
+            }
+            catch
+            {
+                MessageBox.Show(
+                    "Заполните все поля",
+                    "Ошибка заполнения формы",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            sourcesDropDown.Items.AddRange(InitialSources());
-            sensorsDropDown.Items.AddRange(InitialSensors());
+            sourcesDropDown.Items.AddRange(sources);
+            sensorsDropDown.Items.AddRange(sensors);
         }
     }
 }
