@@ -55,7 +55,7 @@ namespace EmissionsInput
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            try
+            /*try
             {
                 Value val = new Value()
                 {
@@ -81,7 +81,14 @@ namespace EmissionsInput
                     "Ошибка заполнения формы",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
+            }*/
+
+            DataAccess db = new DataAccess();
+
+            db.InsertMySource(Guid.NewGuid().ToString(), Int32.Parse(parameterTextBox.Text));
+
+            List<MySource> sources = db.GetMySensors();
+            valueTextBox.Text = sources.Last().SourceUuid;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
