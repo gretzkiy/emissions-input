@@ -1,15 +1,14 @@
-﻿using System;
+﻿using EmissionsLibrary;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EmissionsLibrary;
+using System.Windows.Forms;
 
 namespace EmissionsInput
 {
     public static class Helper
     {
+        public static string[] States = new string[3] { "OK", "ERROR", "MAINTENANCE" };
+
         public static string ConnectionStringValue(string name)
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
@@ -31,6 +30,36 @@ namespace EmissionsInput
             parameters.Add(new Parameter() { sensorUuid = sensorUuid, code = "ElectronicSealState", type = "string", unit = "State" });
 
             return parameters;
+        }
+
+        public static DialogResult ShowParseError(string text)
+        {
+            return MessageBox.Show(
+                text,
+                "Неверный формат данных",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
+
+        public static DialogResult ShowDbError(string caption)
+        {
+            return MessageBox.Show(
+                "Проверьте конфигурацию подключения к базе данных.",
+                caption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
+
+        public static DialogResult ShowInfo(string text, string caption)
+        {
+            return MessageBox.Show(
+                text,
+                caption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
     }
 }

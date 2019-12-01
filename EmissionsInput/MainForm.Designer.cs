@@ -32,11 +32,11 @@
             this.valueTextBox = new System.Windows.Forms.TextBox();
             this.valueLabel = new System.Windows.Forms.Label();
             this.parameterLabel = new System.Windows.Forms.Label();
-            this.parameterTextBox = new System.Windows.Forms.TextBox();
             this.sensorLabel = new System.Windows.Forms.Label();
             this.sourceLabel = new System.Windows.Forms.Label();
             this.sourcesDropDown = new System.Windows.Forms.ComboBox();
             this.sensorsDropDown = new System.Windows.Forms.ComboBox();
+            this.parametersDropDown = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // saveButton
@@ -58,6 +58,7 @@
             this.valueTextBox.Size = new System.Drawing.Size(537, 50);
             this.valueTextBox.TabIndex = 1;
             this.valueTextBox.Text = "Значение измерения";
+            this.valueTextBox.TextChanged += new System.EventHandler(this.valueTextBox_TextChanged);
             // 
             // valueLabel
             // 
@@ -78,15 +79,6 @@
             this.parameterLabel.Size = new System.Drawing.Size(196, 44);
             this.parameterLabel.TabIndex = 4;
             this.parameterLabel.Text = "Параметр";
-            // 
-            // parameterTextBox
-            // 
-            this.parameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.parameterTextBox.Location = new System.Drawing.Point(512, 366);
-            this.parameterTextBox.Name = "parameterTextBox";
-            this.parameterTextBox.Size = new System.Drawing.Size(537, 50);
-            this.parameterTextBox.TabIndex = 3;
-            this.parameterTextBox.Text = "Список параметров";
             // 
             // sensorLabel
             // 
@@ -117,6 +109,7 @@
             this.sourcesDropDown.Name = "sourcesDropDown";
             this.sourcesDropDown.Size = new System.Drawing.Size(537, 50);
             this.sourcesDropDown.TabIndex = 9;
+            this.sourcesDropDown.SelectionChangeCommitted += new System.EventHandler(this.sourcesDropDown_SelectionChangeCommitted);
             // 
             // sensorsDropDown
             // 
@@ -127,18 +120,30 @@
             this.sensorsDropDown.Name = "sensorsDropDown";
             this.sensorsDropDown.Size = new System.Drawing.Size(537, 50);
             this.sensorsDropDown.TabIndex = 10;
+            this.sensorsDropDown.SelectionChangeCommitted += new System.EventHandler(this.sensorsDropDown_SelectionChangeCommitted);
+            // 
+            // parametersDropDown
+            // 
+            this.parametersDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.parametersDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.parametersDropDown.FormattingEnabled = true;
+            this.parametersDropDown.Location = new System.Drawing.Point(512, 366);
+            this.parametersDropDown.Name = "parametersDropDown";
+            this.parametersDropDown.Size = new System.Drawing.Size(537, 50);
+            this.parametersDropDown.TabIndex = 11;
+            this.parametersDropDown.SelectionChangeCommitted += new System.EventHandler(this.parametersDropDown_SelectionChangeCommitted);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1112, 1029);
+            this.Controls.Add(this.parametersDropDown);
             this.Controls.Add(this.sensorsDropDown);
             this.Controls.Add(this.sourcesDropDown);
             this.Controls.Add(this.sourceLabel);
             this.Controls.Add(this.sensorLabel);
             this.Controls.Add(this.parameterLabel);
-            this.Controls.Add(this.parameterTextBox);
             this.Controls.Add(this.valueLabel);
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.saveButton);
@@ -156,11 +161,11 @@
         private System.Windows.Forms.TextBox valueTextBox;
         private System.Windows.Forms.Label valueLabel;
         private System.Windows.Forms.Label parameterLabel;
-        private System.Windows.Forms.TextBox parameterTextBox;
         private System.Windows.Forms.Label sensorLabel;
         private System.Windows.Forms.Label sourceLabel;
         private System.Windows.Forms.ComboBox sourcesDropDown;
         private System.Windows.Forms.ComboBox sensorsDropDown;
+        private System.Windows.Forms.ComboBox parametersDropDown;
     }
 }
 

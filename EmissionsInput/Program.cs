@@ -1,9 +1,7 @@
-﻿using System;
+﻿using EmissionsLibrary;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using EmissionsLibrary;
 
 namespace EmissionsInput
 {
@@ -15,9 +13,24 @@ namespace EmissionsInput
         [STAThread]
         static void Main()
         {
-            if (Source.Get(Helper.ConnectionStringValue("EmissionsDb")).Count == 0)
+            try
             {
-                SeedDb();
+                if (Source.Get(Helper.ConnectionStringValue("emissionsDb")).Count == 0)
+                {
+                    SeedDb();
+
+                    Helper.ShowInfo("База данных инициализированна.", "Успешная запись в базу данных");
+                }
+            }
+            catch
+            {
+                var dialog = Helper.ShowDbError("Ошибка инициализации базы данных");
+                
+                if (dialog == DialogResult.OK)
+                {
+                    Application.Exit();
+                    return;
+                }
             }
 
             Application.EnableVisualStyles();
@@ -35,7 +48,7 @@ namespace EmissionsInput
 
             for (int i = 0; i < 3; i++)
             {
-                var newSource = new Source() { pniv = i };
+                var newSource = new Source() { pniv = i + 1 };
                 sources.Add(newSource);
 
                 Source.Create(dbConnectionString, newSource);
@@ -43,14 +56,17 @@ namespace EmissionsInput
 
             // Создать датчики для каждого источника выбросов
             var sensors = new List<Sensor>();
-            var states = new string[3] { "OK", "ERROR", "MAINTENANCE" };
             var random = new Random();
 
             sources.ForEach(delegate (Source source)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 6; i++)
                 {
-                    var newSensor = new Sensor() { sourceUuid = source.sourceUuid, state = states[random.Next(0, states.Length)] };
+                    var newSensor = new Sensor()
+                    {
+                        sourceUuid = source.sourceUuid,
+                        state = Helper.States[random.Next(0, Helper.States.Length)]
+                    };
                     sensors.Add(newSensor);
 
                     Sensor.Create(dbConnectionString, newSensor);
