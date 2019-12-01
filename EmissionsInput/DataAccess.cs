@@ -28,10 +28,10 @@ namespace EmissionsInput
                     pniv = _pniv
                 };
 
-                List<MySource> sources = new List<MySource>();
-                sources.Add(newSource);
+                //List<MySource> sources = new List<MySource>();
+                //sources.Add(newSource);
 
-                connection.Execute("insert into MySources (SourceUuid, pniv) values (@SourceUuid, @pniv);", sources);
+                connection.Execute("insert into MySources (SourceUuid, pniv) values (@SourceUuid, @pniv);", newSource);
             }
         }
     }
