@@ -7,6 +7,8 @@ namespace EmissionsInput
 {
     static class Program
     {
+        public static int ProgramStartTime = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>

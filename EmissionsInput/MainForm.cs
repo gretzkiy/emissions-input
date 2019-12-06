@@ -53,7 +53,8 @@ namespace EmissionsInput
                 Value newValue = new Value()
                 {
                     value = inputValue,
-                    parameterUuid = selectedParameter.parameterUuid
+                    parameterUuid = selectedParameter.parameterUuid,
+                    timestampStart = Program.ProgramStartTime
                 };
 
                 try
